@@ -622,6 +622,9 @@ public abstract class AbstractUserStoreManager implements UserStoreManager {
         }
         // #################### </Listeners> #####################################################
 
+        if (!list.isEmpty()) {
+            return list.get(0);
+        }
         return value;
     }
 
@@ -961,8 +964,6 @@ public abstract class AbstractUserStoreManager implements UserStoreManager {
         }
         // #################### </Listeners> #####################################################
 
-        doUpdateCredentialByAdmin(userName, newCredential);
-
         if (!checkUserPasswordValid(newCredential)) {
             String errorMsg = realmConfig
                     .getUserStoreProperty(PROPERTY_PASSWORD_ERROR_MSG);
@@ -982,6 +983,7 @@ public abstract class AbstractUserStoreManager implements UserStoreManager {
             throw new UserStoreException("User " + userName + " does not exisit in the user store");
         }
 
+        doUpdateCredentialByAdmin(userName, newCredential);
 
         // #################### <Listeners> #####################################################
         for (UserOperationEventListener listener : UMListenerServiceComponent
